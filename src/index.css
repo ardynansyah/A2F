@@ -1,1 +1,74 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/newsreader/index.css';
+@import '@fontsource-variable/public-sans/index.css';
+
+/* Token desain A2F. Semua warna dan font didefinisikan sekali di sini, tidak
+   ada nilai hex yang ditulis ulang di komponen. */
+@theme {
+  --font-display: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Public Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --color-paper: #faf8f2;
+  --color-ink: #23201b;
+  --color-muted: #5b564c;
+  --color-rule: #e5e1d8;
+  --color-olive: #4a5a28;
+  --color-olive-strong: #3f4d20;
+  --color-olive-soft: #e3e7d4;
+
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 14px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    /* Font variabel: biarkan browser memakai sumbu yang ada, jangan mensintesis
+       ketebalan baru. */
+    font-synthesis-weight: none;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* Focus ring custom, bukan outline yang dihapus. Olive gelap di atas paper
+     kontras 7.10:1, jadi indikatornya jelas terlihat. */
+  :focus-visible {
+    outline: 2px solid var(--color-olive);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Anchor tidak tertutup header tipis saat di-scroll. */
+  [id] {
+    scroll-margin-top: 2rem;
+  }
+}
+
+@utility skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+
+  &:focus {
+    left: 1rem;
+    top: 1rem;
+  }
+}
