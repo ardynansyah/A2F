@@ -1,14 +1,29 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" class="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="A2F, tim tiga orang. Profil, keahlian, dan cara menghubungi kami."
+      content="A2F, tim tiga developer. Front-End interaktif dan Back-End performa tinggi untuk aplikasi web modern."
     />
-    <title>A2F</title>
+    <meta name="theme-color" content="#10141a" />
+    <title>A2F — Full-Stack Web Development Team</title>
+    <script>
+      // Terapkan tema sebelum paint supaya tidak ada kedipan warna.
+      (function () {
+        try {
+          var theme = localStorage.getItem('a2f-theme') || 'dark'
+          var root = document.documentElement
+          root.classList.toggle('dark', theme === 'dark')
+          root.dataset.theme = theme
+          root.style.colorScheme = theme
+        } catch (error) {
+          // Abaikan: fallback ke kelas "dark" di elemen html.
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

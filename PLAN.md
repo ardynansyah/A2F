@@ -1,8 +1,10 @@
 # Plan: Landing Page Profil Tim A2F
 
-Status per 12 Oktober 2026: M1 (token desain dan font) dan M2 (kerangka hero, header,
-footer) sudah jalan. M3 (profil anggota) jalan sebagian, masih menunggu data asli dari
-tiga anggota. Rencana ini belum selesai, jadi jangan diperlakukan sebagai hasil akhir.
+Status per 12 Oktober 2026: rencana awal (tema terang olive, navbar tipis) **diganti**.
+Desain baru diambil dari ekspor Google Stitch dan dipecah menjadi komponen React:
+tema gelap, aksen indigo, Plus Jakarta Sans/Geist, navbar penuh, dan dark/light toggle.
+Halaman sekarang punya tujuh section (navbar, hero, tentang, tim, tech stack, proyek,
+kontak + footer). Rencana lama di bawah disimpan sebagai catatan sejarah.
 
 Isi plan: bagian 3 dan 4 adalah rencana **isi halaman**, yaitu apa yang tertulis di
 halaman dan siapa yang mengisinya. Bagian 5 sampai 9 adalah rencana cara mengerjakannya.
@@ -246,20 +248,44 @@ karena dark mode setengah jalan lebih buruk daripada tidak ada.
 ```
 src/
   main.jsx
-  index.css              # @theme: warna, font, radius + focus ring
+  index.css              # @theme: warna (gelap/terang), font, spacing, tipografi + focus ring
   App.jsx                # menyusun section, hanya ini yang tahu urutan
-  data/members.js        # konten nyata tiap anggota, satu sumber
+  data/                  # konten nyata, satu sumber per section
+    navigation.js        # link navbar + footer
+    members.js           # Ardy, Ferdy, Ayip
+    hero.js              # metrik hero
+    about.js             # tiga pilar
+    techStack.js         # tiga layer teknologi
+    projects.js          # tiga kartu portofolio
+  hooks/
+    useTheme.js          # state tema gelap/terang + localStorage
+  lib/
+    tones.js             # pemetaan nada -> kelas Tailwind
   components/
-    SiteHeader.jsx       # sudah ada
-    Hero.jsx             # sudah ada
-    Members.jsx          # sudah ada, daftar tiga anggota
-    Placeholder.jsx      # sudah ada, penanda data yang belum masuk
-    SiteFooter.jsx       # sudah ada
-    MemberAvatar.jsx     # belum, menyusul di M3
-    Contact.jsx          # belum, menyusul setelah ada alamat kontak
+    Navbar.jsx           # navigasi sticky + toggle tema + menu mobile
+    Hero.jsx             # judul, sub-judul, CTA, jendela kode
+    About.jsx            # "Di Balik A2F" + tiga pilar
+    TeamSection.jsx      # grid kartu anggota + filter peran
+    MemberCard.jsx       # satu kartu anggota
+    TechStack.jsx        # tiga layer teknologi
+    Projects.jsx         # showcase portofolio
+    ProjectCard.jsx      # satu kartu proyek
+    Footer.jsx           # section kontak + copyright
+    SectionHeading.jsx   # judul section yang dipakai berulang
+    ThemeToggle.jsx      # tombol ganti tema
+    Icon.jsx             # ikon Material Symbols
 ```
 
-Catatan:
+Catatan baru (menggantikan catatan lama di bawah):
+
+- Konten disimpan di `src/data/*`, komponen tidak menyimpan teks di dalamnya.
+- Warna dan font ditulis sekali di `index.css` sebagai variabel `--a2f-*` untuk dua
+  mode, lalu dipakai sebagai utility class. Tidak ada nilai hex di komponen.
+- Navbar, hero, tentang, tim, tech stack, proyek, dan footer adalah komponen terpisah.
+- Gambar (foto anggota dan mockup proyek) memakai URL dari desain Stitch. Dua URL
+  sudah mati dan diberi fallback di komponen, bukan dibiarkan rusak.
+- Tombol dengan `href="#"` (mis. Live Demo, Repositori) diambil apa adanya dari desain
+  dan masih perlu diarahkan ke tautan asli sebelum rilis.
 
 - `data/members.js` adalah satu-satunya tempat konten orang disimpan. Komponen tidak
   menyimpan nama atau skill di dalamnya. Ini yang membuat tiga orang bisa kerja paralel

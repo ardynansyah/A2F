@@ -31,16 +31,62 @@ npm run lint      # jalankan Oxlint
 
 ```
 .
-├── index.html
-├── vite.config.js        # plugin React + Tailwind
+├── index.html                 # <html class="dark"> + skrip anti-kedip tema
+├── vite.config.js             # plugin React + Tailwind
 ├── package.json
 ├── public/
+├── stitch_a2f_team_landing_page/   # file desain mentah (referensi, tidak diimpor)
 └── src/
-    ├── main.jsx          # entry point React
-    ├── App.jsx           # komponen utama (contoh pakai class Tailwind)
-    ├── index.css         # @import "tailwindcss";
-    └── assets/
+    ├── main.jsx               # entry point React
+    ├── App.jsx                # menyusun semua section, hanya ini yang tahu urutan
+    ├── index.css              # @import tailwindcss + font + @theme (token desain)
+    ├── data/                  # satu sumber konten, komponen tidak menyimpan teks
+    │   ├── navigation.js      # link navbar + footer
+    │   ├── members.js         # Ardy, Ferdy, Ayip
+    │   ├── hero.js            # metrik hero
+    │   ├── about.js           # tiga pilar
+    │   ├── techStack.js       # tiga layer teknologi
+    │   └── projects.js        # tiga kartu portofolio
+    ├── hooks/
+    │   └── useTheme.js        # state tema gelap/terang + localStorage
+    ├── lib/
+    │   └── tones.js           # pemetaan nama nada -> kelas Tailwind
+    └── components/
+        ├── Navbar.jsx         # navigasi sticky + toggle tema + menu mobile
+        ├── Hero.jsx           # judul, sub-judul, CTA, jendela kode
+        ├── About.jsx          # "Di Balik A2F" + tiga pilar
+        ├── TeamSection.jsx    # grid kartu anggota + filter peran
+        ├── MemberCard.jsx     # satu kartu anggota
+        ├── TechStack.jsx      # tiga layer teknologi
+        ├── Projects.jsx       # showcase portofolio
+        ├── ProjectCard.jsx    # satu kartu proyek
+        ├── Footer.jsx         # section kontak + copyright
+        ├── SectionHeading.jsx # judul section yang dipakai berulang
+        ├── ThemeToggle.jsx    # tombol ganti tema
+        └── Icon.jsx           # ikon Material Symbols
 ```
+
+## Tema gelap/terang
+
+Halaman default **gelap** (`<html class="dark">`). Tombol di navbar menukar ke terang
+dan pilihannya disimpan di `localStorage`. Skrip kecil di `index.html` menerapkan tema
+sebelum paint supaya tidak ada kedipan warna.
+
+Nilai warna ditulis sekali di `src/index.css` sebagai variabel (`--a2f-*`) untuk mode
+terang dan gelap, lalu didaftarkan ke Tailwind lewat `@theme inline`. Komponen cukup
+memakai satu nama utility (mis. `bg-surface-container-low`, `text-on-surface`), tidak
+ada nilai hex yang ditulis ulang.
+
+## Font
+
+Font dipasang lokal lewat `@fontsource` (tanpa request ke Google Fonts):
+
+| Peran   | Font                  | Paket                                   |
+| ------- | --------------------- | --------------------------------------- |
+| Judul   | Plus Jakarta Sans     | `@fontsource-variable/plus-jakarta-sans` |
+| Teks    | Plus Jakarta Sans     | `@fontsource-variable/plus-jakarta-sans` |
+| Label   | Geist                 | `@fontsource-variable/geist`             |
+| Ikon    | Material Symbols      | `@fontsource/material-symbols`           |
 
 ## Tailwind CSS v4
 

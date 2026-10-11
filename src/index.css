@@ -1,71 +1,223 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/newsreader/index.css';
-@import '@fontsource-variable/public-sans/index.css';
+@import '@fontsource-variable/plus-jakarta-sans/index.css';
+@import '@fontsource-variable/geist/index.css';
+@import '@fontsource/material-symbols/400.css';
 
-/* Token desain A2F. Semua warna dan font didefinisikan sekali di sini, tidak
-   ada nilai hex yang ditulis ulang di komponen. */
-@theme {
-  --font-display: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Public Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+/* Dark mode berbasis kelas: <html class="dark">. Default halaman adalah gelap. */
+@custom-variant dark (&:where(.dark, .dark *));
 
-  --color-paper: #faf8f2;
-  --color-ink: #23201b;
-  --color-muted: #5b564c;
-  --color-rule: #e5e1d8;
-  --color-olive: #4a5a28;
-  --color-olive-strong: #3f4d20;
-  --color-olive-soft: #e3e7d4;
+/* --------------------------------------------------------------------------
+   Nilai runtime A2F.
+   Semua warna semantik ditulis sebagai variabel yang berganti antara mode
+   terang dan gelap, sehingga komponen cukup memakai satu nama utility.
+   -------------------------------------------------------------------------- */
+:root {
+  --a2f-font-display: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --a2f-font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --a2f-font-label: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --a2f-font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
-  --radius-sm: 2px;
-  --radius-md: 6px;
-  --radius-lg: 14px;
+  /* Mode terang */
+  color-scheme: light;
+  --a2f-background: #f8f9fa;
+  --a2f-surface: #ffffff;
+  --a2f-surface-container-lowest: #ffffff;
+  --a2f-surface-container-low: #ffffff;
+  --a2f-surface-container: #f1f3f5;
+  --a2f-surface-container-high: #e9ecef;
+  --a2f-surface-container-highest: #dee2e6;
+  --a2f-surface-variant: #dee2e6;
+  --a2f-on-surface: #1f2937;
+  --a2f-on-surface-variant: #4b5563;
+  --a2f-outline: #6b7280;
+  --a2f-outline-variant: #e5e7eb;
+  --a2f-primary: #4f46e5;
+  --a2f-accent-indigo: #6366f1;
+  --a2f-on-accent: #ffffff;
+  --a2f-secondary: #047857;
+  --a2f-status-emerald: #047857;
+  --a2f-tertiary: #c2410c;
+  --a2f-error: #dc2626;
+}
+
+.dark {
+  /* Mode gelap (palet asli desain Stitch) */
+  color-scheme: dark;
+  --a2f-background: #10141a;
+  --a2f-surface: #10141a;
+  --a2f-surface-container-lowest: #0a0e14;
+  --a2f-surface-container-low: #181c22;
+  --a2f-surface-container: #1c2026;
+  --a2f-surface-container-high: #262a31;
+  --a2f-surface-container-highest: #31353c;
+  --a2f-surface-variant: #31353c;
+  --a2f-on-surface: #dfe2eb;
+  --a2f-on-surface-variant: #c7c4d7;
+  --a2f-outline: #908fa0;
+  --a2f-outline-variant: #464554;
+  --a2f-primary: #c0c1ff;
+  --a2f-accent-indigo: #6366f1;
+  --a2f-on-accent: #f3f4f6;
+  --a2f-secondary: #4edea3;
+  --a2f-status-emerald: #10b981;
+  --a2f-tertiary: #ffb783;
+  --a2f-error: #ffb4ab;
+}
+
+/* --------------------------------------------------------------------------
+   Token desain untuk Tailwind. Semua utility (bg-surface-container-low,
+   text-headline-lg, p-space-lg, gap-gutter, ...) berasal dari sini.
+   -------------------------------------------------------------------------- */
+@theme inline {
+  --font-display: var(--a2f-font-display);
+  --font-sans: var(--a2f-font-sans);
+  --font-label: var(--a2f-font-label);
+  --font-mono: var(--a2f-font-mono);
+
+  --color-background: var(--a2f-background);
+  --color-surface: var(--a2f-surface);
+  --color-surface-container-lowest: var(--a2f-surface-container-lowest);
+  --color-surface-container-low: var(--a2f-surface-container-low);
+  --color-surface-container: var(--a2f-surface-container);
+  --color-surface-container-high: var(--a2f-surface-container-high);
+  --color-surface-container-highest: var(--a2f-surface-container-highest);
+  --color-surface-variant: var(--a2f-surface-variant);
+  --color-on-surface: var(--a2f-on-surface);
+  --color-on-surface-variant: var(--a2f-on-surface-variant);
+  --color-outline: var(--a2f-outline);
+  --color-outline-variant: var(--a2f-outline-variant);
+  --color-primary: var(--a2f-primary);
+  --color-accent-indigo: var(--a2f-accent-indigo);
+  --color-on-accent: var(--a2f-on-accent);
+  --color-secondary: var(--a2f-secondary);
+  --color-status-emerald: var(--a2f-status-emerald);
+  --color-tertiary: var(--a2f-tertiary);
+  --color-error: var(--a2f-error);
+  --color-bg-dark: #0d1117;
+
+  /* Spacing */
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2rem;
+  --spacing-gutter: 1.5rem;
+  --spacing-gutter-mobile: 1rem;
+  --spacing-margin: 4rem;
+  --spacing-margin-mobile: 1.25rem;
+
+  /* Tipografi */
+  --text-label-sm: 11px;
+  --text-label-sm--line-height: 16px;
+  --text-label-sm--letter-spacing: 0.05em;
+  --text-label-sm--font-weight: 600;
+  --text-label-md: 13px;
+  --text-label-md--line-height: 18px;
+  --text-label-md--letter-spacing: 0.02em;
+  --text-label-md--font-weight: 500;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 20px;
+  --text-body-sm--font-weight: 400;
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--font-weight: 400;
+  --text-headline-sm: 20px;
+  --text-headline-sm--line-height: 28px;
+  --text-headline-sm--font-weight: 600;
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 32px;
+  --text-headline-md--letter-spacing: -0.01em;
+  --text-headline-md--font-weight: 600;
+  --text-headline-lg: 36px;
+  --text-headline-lg--line-height: 44px;
+  --text-headline-lg--letter-spacing: -0.02em;
+  --text-headline-lg--font-weight: 700;
+  --text-headline-lg-mobile: 28px;
+  --text-headline-lg-mobile--line-height: 36px;
+  --text-headline-lg-mobile--letter-spacing: -0.02em;
+  --text-headline-lg-mobile--font-weight: 700;
+  --text-display-hero: 56px;
+  --text-display-hero--line-height: 64px;
+  --text-display-hero--letter-spacing: -0.03em;
+  --text-display-hero--font-weight: 800;
+  --text-display-hero-mobile: 32px;
+  --text-display-hero-mobile--line-height: 40px;
+  --text-display-hero-mobile--letter-spacing: -0.02em;
+  --text-display-hero-mobile--font-weight: 800;
 }
 
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
   }
 
   body {
-    background-color: var(--color-paper);
-    color: var(--color-ink);
-    font-family: var(--font-sans);
-    /* Font variabel: biarkan browser memakai sumbu yang ada, jangan mensintesis
-       ketebalan baru. */
+    background-color: var(--a2f-background);
+    color: var(--a2f-on-surface);
+    font-family: var(--a2f-font-sans);
+    /* Font variabel: biarkan browser memakai sumbu yang ada. */
     font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
   }
 
-  h1,
-  h2,
-  h3 {
-    font-family: var(--font-display);
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-
-  /* Focus ring custom, bukan outline yang dihapus. Olive gelap di atas paper
-     kontras 7.10:1, jadi indikatornya jelas terlihat. */
+  /* Focus ring yang terlihat jelas, bukan outline yang dihapus. */
   :focus-visible {
-    outline: 2px solid var(--color-olive);
+    outline: 2px solid var(--a2f-accent-indigo);
     outline-offset: 3px;
-    border-radius: var(--radius-sm);
+    border-radius: 4px;
   }
 
-  /* Anchor tidak tertutup header tipis saat di-scroll. */
+  /* Anchor tidak tertutup navbar sticky saat di-scroll. */
   [id] {
-    scroll-margin-top: 2rem;
+    scroll-margin-top: 5.5rem;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Ikon Material Symbols dipakai lewat komponen <Icon name="..." />. */
+@utility material-symbols {
+  font-family: 'Material Symbols';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
 }
 
 @utility skip-link {
   position: absolute;
   left: -9999px;
   top: 0;
-  z-index: 50;
-  background-color: var(--color-ink);
-  color: var(--color-paper);
+  z-index: 60;
+  background-color: var(--a2f-on-surface);
+  color: var(--a2f-background);
   padding: 0.75rem 1rem;
-  border-radius: var(--radius-md);
+  border-radius: 0.5rem;
 
   &:focus {
     left: 1rem;
